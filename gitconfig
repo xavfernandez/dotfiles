@@ -1,0 +1,70 @@
+[user]
+    name = Xavier Fernandez
+    email = xavier.fernandez@polyconseil.fr
+
+[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[commit]
+    verbose = true
+
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    dc = diff --cached
+    lg = log -p
+    pr = pull --rebase
+    p = push
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    latest=for-each-ref --sort=-taggerdate --format='%(refname:short)' --count=1
+    pr-fetch  = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+    pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+
+[push]
+    default = upstream
+
+[url "git@github.com:Polyconseil/"]
+    insteadOf = poly:
+
+[merge]
+    tool = meld
+[core]
+    excludesfile = ~/.gitignore_global
+[credential]
+    helper = /usr/lib/git-core/git-credential-gnome-keyring
+
+[branch]
+    autosetuprebase = always
+
+[fetch]
+    prune = true
+
+[sendemail]
+    smtpEncryption = tls
+    smtpServer = smtp.gmail.com
+    smtpUser = xav.fernandez@gmail.com
+    smtpServerPort = 587
+
+[diff "ansible-vault"]
+    cachetextconv = false
+    textconv = "ansible-vault view"
