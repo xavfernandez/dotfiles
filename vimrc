@@ -21,8 +21,9 @@ call minpac#add('xavfernandez/vim-ripgrep')
 " syntax checker/highlighter
 call minpac#add('scrooloose/syntastic')
 
-" ctrl-p (file explorer plugin)
-call minpac#add('ctrlpvim/ctrlp.vim')
+" fzf to find files
+call minpac#add('junegunn/fzf.vim')
+
 " flake8
 call minpac#add('nvie/vim-flake8')
 " Blackify Python files
@@ -62,9 +63,14 @@ filetype plugin indent on    " required
 
 let mapleader=","
 
-" Search down into subfolders
-" Provides tab-completion for all file-related tasks
-"set path+=**
+" Use Ctrl-P to find files
+nnoremap <C-p> :<C-u>FZF<CR>
+
+" Prefix all fuzzy finder commands with Fzf
+let g:fzf_command_prefix = 'Fzf'
+
+" Seach in open buffers
+map <leader>b :FzfBuffers<cr>
 
 " Display all matching files when we tab complete
 set wildmenu
@@ -102,12 +108,11 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " CtrlP
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_match_window = 'max:50'
-let g:ctrlp_max_files = 100000
-let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
-map <leader>b :CtrlPBuffer<cr>
-map <leader>r :CtrlPClearAllCaches<cr>
+"let g:ctrlp_working_path_mode = 'ra'
+"let g:ctrlp_match_window = 'max:50'
+"let g:ctrlp_max_files = 100000
+"let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
+"map <leader>r :CtrlPClearAllCaches<cr>
 
 " hide matches on <leader>/
 nmap <silent> <leader>/ :nohlsearch<CR>
