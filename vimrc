@@ -51,6 +51,9 @@ call minpac#add('pangloss/vim-javascript')
 "Plugin 'scrooloose/syntastic'
 call minpac#add('digitaltoad/vim-pug')
 
+" Terraform
+call minpac#add('hashivim/vim-terraform')
+
 
 " Syntastic
 "let g:syntastic_html_tidy_exec = 'tidy5'
