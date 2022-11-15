@@ -18,9 +18,6 @@ call minpac#add('tpope/vim-unimpaired')
 " ripgrep plugin
 call minpac#add('xavfernandez/vim-ripgrep')
 
-" syntax checker/highlighter
-call minpac#add('scrooloose/syntastic')
-
 " fzf to find files
 call minpac#add('junegunn/fzf.vim')
 
@@ -38,27 +35,9 @@ call minpac#add('tpope/vim-abolish')
 " Status bar
 call minpac#add('bling/vim-airline')
 
-" Snipmate plugin with its dependencies
-call minpac#add('garbas/vim-snipmate')
-call minpac#add('tomtom/tlib_vim')
-call minpac#add('MarcWeber/vim-addon-mw-utils')
-call minpac#add('honza/vim-snippets')
+" Asynchronous Lint Engine
+call minpac#add('dense-analysis/ale')
 
-" Vue
-call minpac#add('posva/vim-vue')
-
-call minpac#add('pangloss/vim-javascript')
-"Plugin 'scrooloose/syntastic'
-call minpac#add('digitaltoad/vim-pug')
-
-" Terraform
-call minpac#add('hashivim/vim-terraform')
-
-
-" Syntastic
-"let g:syntastic_html_tidy_exec = 'tidy5'
-"let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_javascript_eslint_args = "--config node_modules/blease-js/.eslintrc"
 
 autocmd bufreadpre *.js setlocal sts=2 sw=2
 
@@ -195,18 +174,5 @@ autocmd FileType vue syntax sync fromstart
 silent !mkdir ~/.vim/backups > /dev/null 2>&1
 set undodir=~/.vim/backups
 set undofile
-
-" Syntastic conf
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_pylint_post_args="--max-line-length=120 --disable=abstract-class-little-used,abstract-class-not-used,attribute-defined-outside-init,bad-builtin,bad-continuation,cyclic-import,duplicate-code,fixme,file-ignored,invalid-name,locally-enabled,locally-disabled,maybe-no-member,missing-docstring,no-init,no-member,no-self-use,old-style-class,protected-access,redefined-variable-type,star-args,super-on-old-class,superfluous-parens,too-few-public-methods,too-many-ancestors,too-many-arguments,too-many-branches,too-many-instance-attributes,too-many-lines,too-many-locals,too-many-public-methods,too-many-statements,unused-argument"
-let g:syntastic_python_flake8_post_args="--max-line-length=120"
-"let g:syntastic_python_checkers = ["flake8"]
 
 nnoremap <LEADER>pdb iimport pdb;pdb.set_trace()
