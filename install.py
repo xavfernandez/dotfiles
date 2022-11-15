@@ -27,6 +27,7 @@ def ensure_git_clone(directory, git_url):
 
 
 ensure_symlink('~/.bashrc', './bashrc')
+ensure_symlink('~/.tmux.conf', './tmux.conf')
 ensure_symlink('~/.vimrc', './vimrc')
 ensure_symlink('~/.gitconfig', './gitconfig')
 ensure_symlink('~/.gitignore_global', './gitignore_global')
