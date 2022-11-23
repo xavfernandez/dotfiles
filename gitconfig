@@ -1,6 +1,6 @@
 [user]
     name = Xavier Fernandez
-    email = xavier.fernandez@polyconseil.fr
+    email = xavier.fernandez@beta.gouv.fr
 
 [color]
     ui = auto
@@ -35,6 +35,7 @@
     pr = pull --rebase
     p = push
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lolanoclever = log --graph --decorate --pretty=oneline --abbrev-commit --exclude=refs/heads/master_clever --exclude=refs/remotes/origin/master_clever --all
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     latest=for-each-ref --sort=-taggerdate --format='%(refname:short)' --count=1
     pr-fetch  = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
