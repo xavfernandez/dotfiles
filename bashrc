@@ -36,7 +36,7 @@ alias eks_login='aws-adfs login --profile BCS-PROD-READONLY --adfs-host sts.blue
 
 #export PGHOST=localhost
 #export PGUSER=$USER
-export PGHOST=integration.local
+export PGHOST=localhost
 export PGUSER=postgres
 export PAGER=less
 
