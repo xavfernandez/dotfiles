@@ -176,3 +176,6 @@ set undodir=~/.vim/backups
 set undofile
 
 nnoremap <LEADER>pdb iimport pdb;pdb.set_trace()
+
+" Search in templates directories in Django projects
+set path+=*/templates
