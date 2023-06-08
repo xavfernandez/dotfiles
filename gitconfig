@@ -72,6 +72,10 @@
 [fetch]
     prune = true
 
+[rebase]
+    autosquash = true
+    updateRefs = true
+
 [sendemail]
     smtpEncryption = tls
     smtpServer = smtp.gmail.com
