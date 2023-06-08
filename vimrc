@@ -21,8 +21,6 @@ call minpac#add('xavfernandez/vim-ripgrep')
 " fzf to find files
 call minpac#add('junegunn/fzf.vim')
 
-" flake8
-call minpac#add('nvie/vim-flake8')
 " Blackify Python files
 call minpac#add('psf/black')
 
@@ -99,13 +97,6 @@ nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " hide matches on <leader>/
 nmap <silent> <leader>/ :nohlsearch<CR>
 
-" Flake8
-nnoremap <leader>8 :call Flake8()<CR>
-" autocmd BufWritePost *.py call Flake8()
-let g:flake8_max_line_length=120
-let g:flake8_max_complexity=12
-let g:flake8_ignore="E128"
-
 " Remove trailing whitespace on <leader>S
 nnoremap <leader>S :%s/\s\+$//<cr>:let @/=''<CR>
 
@@ -179,3 +170,7 @@ nnoremap <LEADER>pdb iimport pdb;pdb.set_trace()
 
 " Search in templates directories in Django projects
 set path+=*/templates
+
+" ALE configuration
+let g:ale_lint_on_save = 1
+let g:ale_fixers = { 'python': ['ruff'] }
