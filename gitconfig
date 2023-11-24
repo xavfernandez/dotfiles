@@ -22,7 +22,7 @@
     untracked = cyan
 
 [commit]
-    verbose = true
+    verbose = 2
 
 [alias]
     st = status
@@ -33,7 +33,6 @@
     dc = diff --cached
     lg = log -p
     pr = pull --rebase
-    p = push
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lolanoclever = log --graph --decorate --pretty=oneline --abbrev-commit --exclude=refs/heads/master_clever --exclude=refs/remotes/origin/master_clever --all
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
