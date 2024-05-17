@@ -25,8 +25,7 @@ call minpac#add('junegunn/fzf.vim')
 call minpac#add('psf/black')
 
 call minpac#add('davidhalter/jedi-vim')
-call minpac#add('airblade/vim-gitgutter')
-"Plugin 'altercation/vim-colors-solarized'
+call minpac#add('https://github.com/airblade/vim-gitgutter.git')
 call minpac#add('ervandew/supertab')
 " Better substitution
 call minpac#add('tpope/vim-abolish')
@@ -35,6 +34,10 @@ call minpac#add('bling/vim-airline')
 
 " Asynchronous Lint Engine
 call minpac#add('dense-analysis/ale')
+
+call minpac#add('rust-lang/rust.vim')
+
+call minpac#add('lifepillar/vim-solarized8')
 
 
 autocmd bufreadpre *.js setlocal sts=2 sw=2
@@ -87,13 +90,6 @@ set wildignore+=*.pyc,*.zip,*.pyo
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
-" CtrlP
-"let g:ctrlp_working_path_mode = 'ra'
-"let g:ctrlp_match_window = 'max:50'
-"let g:ctrlp_max_files = 100000
-"let g:ctrlp_custom_ignore = '\v[\/](\.(git|hg|svn))|node_modules$'
-"map <leader>r :CtrlPClearAllCaches<cr>
-
 " hide matches on <leader>/
 nmap <silent> <leader>/ :nohlsearch<CR>
 
@@ -111,8 +107,6 @@ let g:jedi#rename_command = ""
 
 set hidden             "Allow to hide modified buffer
 
-let g:pyflakes_use_quickfix = 0
-
 "au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 
@@ -122,26 +116,10 @@ set completeopt=menuone,longest,preview
 set list
 set listchars=tab:>.,trail:.
 
-" Add the virtualenv's site-packages to vim path
-"python << EOF
-"import os.path
-"import sys
-"import vim
-"if 'VIRTUAL_ENV' in os.environ:
-"    project_base_dir = os.environ['VIRTUAL_ENV']
-"    sys.path.insert(0, project_base_dir)
-"    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"    execfile(activate_this, dict(__file__=activate_this))
-"    #print sys.path
-"EOF
-
 syntax enable
-"set background=dark
-"let g:solarized_termcolors=256
-"let g:solarized_termtrans=1
-"colorscheme solarized
 
-"set t_Co=16
+set background=dark
+colorscheme solarized8
 
 " Enable w!! to sudo after editing
 cmap w!! w !sudo tee % >/dev/null
@@ -157,16 +135,11 @@ autocmd User fugitive
   \   nnoremap <buffer> .. :edit %:h<CR> |
   \ endif
 
-" Helper for vim-vue plugin
-autocmd FileType vue syntax sync fromstart
-
 
 " Keep undo history across sessions, by storing in file.
 silent !mkdir ~/.vim/backups > /dev/null 2>&1
 set undodir=~/.vim/backups
 set undofile
-
-nnoremap <LEADER>pdb iimport pdb;pdb.set_trace()
 
 " Search in templates directories in Django projects
 set path+=*/templates
