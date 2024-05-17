@@ -16,6 +16,8 @@ export FZF_DEFAULT_COMMAND='rg --files'
 
 export PATH=$HOME/.local/bin:${PATH}
 export PATH=$HOME/.npm-packages/bin:${PATH}
+export GOPATH=$HOME/gopath
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 
@@ -38,6 +40,7 @@ alias eks_login='aws-adfs login --profile BCS-PROD-READONLY --adfs-host sts.blue
 #export PGUSER=$USER
 export PGHOST=localhost
 export PGUSER=postgres
+export PGPASSWORD=password
 export PAGER=less
 
 
@@ -53,3 +56,6 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 eval "$(starship init bash)"
+eval "$(direnv hook bash)"
+
+. "$HOME/.cargo/env"
