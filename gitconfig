@@ -40,7 +40,6 @@
     latest=for-each-ref --sort=-taggerdate --format='%(refname:short)' --count=1
     pr-fetch  = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
     pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
-    pf = push --force-with-lease --force-if-includes
     # From https://fortes.com/2022/make-git-better-with-fzf/
     addm = "!git ls-files --deleted --modified --other --exclude-standard | fzf -0 -m --preview 'git diff --color=always {-1}' | xargs -r git add"
     addmp = "!git ls-files --deleted --modified --exclude-standard | fzf -0 -m --preview 'git diff --color=always {-1}' | xargs -r -o git add -p"
@@ -63,8 +62,8 @@
     tool = meld
 [core]
     excludesfile = ~/.gitignore_global
-[credential]
-    helper = /usr/lib/git-core/git-credential-gnome-keyring
+#[credential]
+#    helper = /usr/lib/git-core/git-credential-gnome-keyring
 
 [branch]
     autosetuprebase = always
@@ -85,3 +84,8 @@
 [diff "ansible-vault"]
     cachetextconv = false
     textconv = "ansible-vault view"
+
+[push]
+    autoSetupRemote = true
+[diff "sopsdiffer"]
+    textconv = sops decrypt
