@@ -40,6 +40,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	"tpope/vim-fugitive",
+	"tpope/vim-rhubarb",
+	"github/copilot.vim",
 	"airblade/vim-gitgutter",
 	{
 		"ibhagwan/fzf-lua",
@@ -105,6 +107,12 @@ vim.keymap.set("n", "<Leader>r", ":GrepQuickfix ")
 -- Sarch in templates directories in Django projects
 vim.opt.path:append({ "*/templates" })
 
+vim.filetype.add({
+	pattern = {
+		[".*/itou/templates/.*%.html"] = { "htmldjango", priority = 10 },
+	},
+})
+
 -- LSP configuration
 vim.lsp.config("*", {
 	root_markers = { ".git" },
@@ -116,11 +124,9 @@ vim.lsp.enable("pyright")
 vim.lsp.enable("ruff")
 vim.lsp.enable("rust_analyzer")
 
-vim.filetype.add({
-	pattern = {
-		[".*/itou/templates/.*%.html"] = { "htmldjango", priority = 10 },
-	},
-})
+vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
 
 require("nvim-treesitter.configs").setup({
 	ensure_installed = { "c", "css", "javascript", "html", "htmldjango", "python" },
