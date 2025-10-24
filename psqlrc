@@ -1,0 +1,5 @@
+-- disambiguate null values from empty strings
+\pset null ∅
+
+-- display how long sql statements take
+\timing on
