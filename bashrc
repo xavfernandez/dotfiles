@@ -21,8 +21,6 @@ export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/gcr/ssh
 
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 
-source /usr/bin/virtualenvwrapper_lazy.sh
-
 #source <(kubectl completion bash)
 #source <(helm completion bash)
 #source <(minikube completion bash)
