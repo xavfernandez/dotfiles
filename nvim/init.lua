@@ -75,7 +75,11 @@ require("lazy").setup({
 		priority = 1000,
 		opts = {},
 	},
-	"nvim-treesitter/nvim-treesitter",
+	{
+		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
+		build = ":TSUpdate",
+	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",
 		opts = {
