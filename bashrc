@@ -14,6 +14,7 @@ set -o vi
 # Make fzf use ripgrep
 export FZF_DEFAULT_COMMAND='rg --files'
 
+export EDITOR=/usr/bin/nvim
 export PATH=$HOME/.local/bin:${PATH}
 export PATH=$HOME/.npm-packages/bin:${PATH}
 export GOPATH=$HOME/gopath
