@@ -12,9 +12,9 @@ def ensure_symlink(link_path, link_target):
         print(f"{link_path} created")
     except FileExistsError:
         link_content = os.readlink(link_path)
-        if os.path.join(os.path.dirname(link_path), link_content) == os.path.abspath(
-            link_target
-        ):
+        if os.path.abspath(
+            os.path.join(os.path.dirname(link_path), link_content)
+        ) == os.path.abspath(link_target):
             print(f"{link_path} is up-to-date")
             return
         raise
