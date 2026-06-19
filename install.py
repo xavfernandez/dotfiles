@@ -30,11 +30,5 @@ def ensure_git_clone(directory, git_url):
 ensure_symlink("~/.bashrc", "./bashrc")
 ensure_symlink("~/.psqlrc", "./psqlrc")
 ensure_symlink("~/.tmux.conf", "./tmux.conf")
-ensure_symlink("~/.vimrc", "./vimrc")
 ensure_symlink("~/.gitconfig", "./gitconfig")
 ensure_symlink("~/.gitignore_global", "./gitignore_global")
-os.makedirs(os.path.expanduser("~/.vim/pack/minpac/opt"), exist_ok=True)
-ensure_git_clone(
-    os.path.expanduser("~/.vim/pack/minpac/opt/minpac"),
-    "https://github.com/k-takata/minpac.git",
-)
