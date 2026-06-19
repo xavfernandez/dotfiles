@@ -1,3 +1,44 @@
+vim.api.nvim_create_autocmd("PackChanged", {
+	callback = function(ev)
+		local name, kind = ev.data.spec.name, ev.data.kind
+		if name == "blink-cmp" and (kind == "update" or kind == "install") then
+			if not ev.data.active then
+				vim.cmd.packadd("blink-cmp")
+			end
+			vim.cmd("cargo build --release")
+		end
+	end,
+})
+
+vim.pack.add({
+	-- fzf-lua
+	"https://github.com/nvim-tree/nvim-web-devicons",
+	"https://github.com/ibhagwan/fzf-lua",
+	"https://github.com/tpope/vim-fugitive",
+	"https://github.com/tpope/vim-rhubarb",
+	"https://github.com/airblade/vim-gitgutter",
+	"https://github.com/stevearc/conform.nvim",
+	"https://github.com/craftzdog/solarized-osaka.nvim",
+	"https://github.com/nvim-treesitter/nvim-treesitter-context",
+	"https://github.com/neovim/nvim-lspconfig",
+	"https://github.com/saghen/blink.cmp",
+
+	-- For codecompanion
+	"https://www.github.com/nvim-lua/plenary.nvim",
+	"https://github.com/nvim-treesitter/nvim-treesitter",
+	{
+		src = "https://www.github.com/olimorris/codecompanion.nvim",
+		version = vim.version.range("^19.0.0"),
+	},
+
+	-- For blink.cmp
+	"https://github.com/rafamadriz/friendly-snippets",
+	{
+		src = "https://github.com/saghen/blink.cmp",
+		version = vim.version.range("1.*"),
+	},
+})
+
 vim.g.mapleader = ","
 
 vim.g.python3_host_prog = "/usr/bin/python3"
@@ -24,137 +65,76 @@ vim.opt.incsearch = true
 
 vim.opt.background = "dark"
 
--- /home/xafer/.local/share/nvim/lazy/lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
-end
-vim.opt.rtp:prepend(lazypath)
+require("blink.cmp").setup({
+	-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
+	-- 'super-tab' for mappings similar to vscode (tab to accept)
+	-- 'enter' for enter to accept
+	-- 'none' for no mappings
+	--
+	-- All presets have the following mappings:
+	-- C-space: Open menu or open docs if already open
+	-- C-n/C-p or Up/Down: Select next/previous item
+	-- C-e: Hide menu
+	-- C-k: Toggle signature help (if signature.enabled = true)
+	--
+	-- See :h blink-cmp-config-keymap for defining your own keymap
+	keymap = { preset = "super-tab" },
 
-require("lazy").setup({
-	"tpope/vim-fugitive",
-	"tpope/vim-rhubarb",
-	"airblade/vim-gitgutter",
-	{
-		"ibhagwan/fzf-lua",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
+	appearance = {
+		-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+		-- Adjusts spacing to ensure icons are aligned
+		nerd_font_variant = "mono",
 	},
-	{
-		"stevearc/conform.nvim",
-		opts = {
-			formatters_by_ft = {
-				htmldjango = { "djlint" },
-				lua = { "stylua" },
-				python = function(bufnr)
-					if os.getenv("NO_FORMAT") then
-						return {}
-					elseif require("conform").get_formatter_info("ruff_format", bufnr).available then
-						return { "ruff_fix", "ruff_format" }
-					else
-						return { "isort", "black" }
-					end
-				end,
-				["*"] = { "trim_newlines", "trim_whitespace" },
-			},
-			format_on_save = {
-				lsp_fallback = false,
-				timeout_ms = 6000,
-			},
+
+	-- (Default) Only show the documentation popup when manually triggered
+	completion = { documentation = { auto_show = false } },
+
+	-- Default list of enabled providers defined so that you can extend it
+	-- elsewhere in your config, without redefining it, due to `opts_extend`
+	sources = {
+		default = { "lsp", "path", "snippets", "buffer" },
+		per_filetype = {
+			codecompanion = { "codecompanion" },
 		},
 	},
-	{
-		"craftzdog/solarized-osaka.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = {},
-	},
-	{
-		"nvim-treesitter/nvim-treesitter",
-		lazy = false,
-		build = ":TSUpdate",
-	},
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		opts = {
-			mode = "topline",
+
+	-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
+	-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+	-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+	--
+	-- See the fuzzy documentation for more information
+	fuzzy = { implementation = "prefer_rust_with_warning" },
+})
+require("codecompanion").setup({
+	interactions = {
+		chat = {
+			adapter = "mistral_vibe",
 		},
 	},
-	"nvim-treesitter/nvim-treesitter-textobjects",
-	"neovim/nvim-lspconfig",
-	{
-		"saghen/blink.cmp",
-		-- optional: provides snippets for the snippet source
-		dependencies = { "rafamadriz/friendly-snippets" },
-
-		-- use a release tag to download pre-built binaries
-		version = "1.*",
-		build = "cargo build --release",
-		---@module 'blink.cmp'
-		---@type blink.cmp.Config
-		opts = {
-			-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
-			-- 'super-tab' for mappings similar to vscode (tab to accept)
-			-- 'enter' for enter to accept
-			-- 'none' for no mappings
-			--
-			-- All presets have the following mappings:
-			-- C-space: Open menu or open docs if already open
-			-- C-n/C-p or Up/Down: Select next/previous item
-			-- C-e: Hide menu
-			-- C-k: Toggle signature help (if signature.enabled = true)
-			--
-			-- See :h blink-cmp-config-keymap for defining your own keymap
-			keymap = { preset = "super-tab" },
-
-			appearance = {
-				-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-				-- Adjusts spacing to ensure icons are aligned
-				nerd_font_variant = "mono",
-			},
-
-			-- (Default) Only show the documentation popup when manually triggered
-			completion = { documentation = { auto_show = false } },
-
-			-- Default list of enabled providers defined so that you can extend it
-			-- elsewhere in your config, without redefining it, due to `opts_extend`
-			sources = {
-				default = { "lsp", "path", "snippets", "buffer" },
-				per_filetype = {
-					codecompanion = { "codecompanion" },
-				},
-			},
-
-			-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
-			-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
-			-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
-			--
-			-- See the fuzzy documentation for more information
-			fuzzy = { implementation = "prefer_rust_with_warning" },
-		},
-		opts_extend = { "sources.default" },
+})
+require("conform").setup({
+	formatters_by_ft = {
+		htmldjango = { "djlint" },
+		lua = { "stylua" },
+		python = function(bufnr)
+			if os.getenv("NO_FORMAT") then
+				return {}
+			elseif require("conform").get_formatter_info("ruff_format", bufnr).available then
+				return { "ruff_fix", "ruff_format" }
+			else
+				return { "isort", "black" }
+			end
+		end,
+		["*"] = { "trim_newlines", "trim_whitespace" },
 	},
-	{
-		"olimorris/codecompanion.nvim",
-		version = "^19.0.0",
-		opts = {
-			interactions = {
-				chat = {
-					adapter = "mistral_vibe",
-				},
-			},
-		},
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
+	format_on_save = {
+		lsp_fallback = false,
+		timeout_ms = 6000,
 	},
+})
+
+require("treesitter-context").setup({
+	mode = "topline",
 })
 
 vim.cmd("colorscheme solarized-osaka")
@@ -197,14 +177,5 @@ vim.lsp.enable("rust_analyzer")
 vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", { noremap = true, silent = true })
-
-require("nvim-treesitter.configs").setup({
-	ensure_installed = { "c", "css", "javascript", "html", "htmldjango", "python" },
-	auto_install = true,
-
-	highlight = {
-		enable = true,
-	},
-})
 
 vim.diagnostic.config({ virtual_lines = true })
