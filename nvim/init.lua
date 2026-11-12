@@ -56,6 +56,7 @@ vim.opt.hidden = true
 vim.opt.list = true
 vim.opt.number = true
 vim.opt.grepprg = "rg --hidden --vimgrep" -- Avoid --no-ignore default behavior
+vim.cmd("digraphs TS 8239")
 
 -- Searching and patterns
 vim.opt.ignorecase = true -- Default to using case insensitive searches
