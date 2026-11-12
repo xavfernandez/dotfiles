@@ -58,3 +58,6 @@ eval "$(starship init bash)"
 eval "$(direnv hook bash)"
 
 . "$HOME/.cargo/env"
+
+# Scaleway CLI autocomplete initialization.
+eval "$(scw autocomplete script shell=bash)"
